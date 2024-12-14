@@ -9,6 +9,10 @@ import { usePathname } from 'next/navigation';
 function SideNav() {
     
     const {user}=useKindeBrowserClient();
+
+    const getInitial = () => {
+        return user?.given_name?.charAt(0).toUpperCase() || "?";
+    };
     const menuList = [
         {
           id: 1,
@@ -66,14 +70,23 @@ function SideNav() {
                 </Link>
             ))}
 
-            <div className='flex gap-2 items-center bottom-5 fixed p-4'>
-                <Image src="https://lh3.googleusercontent.com/a/ACg8ocKJJUee2JkuCGQbDFGKcRKq-bohrFqZYCeLW8NqxSyVfvz0cw=s96-c" width={35}
-                height={35}
-                alt='user'
-                className='rounded-full' />
+<div className="flex gap-2 items-center bottom-5 fixed py-4">
+        {user?.picture ? (
+          <Image
+            src={user.picture}
+            width={35}
+            height={35}
+            alt="user"
+            className="rounded-full"
+          />
+        ) : (
+          <div className="flex items-center justify-center w-9 h-9 bg-gray-300 text-gray-800 rounded-full font-bold">
+            {getInitial()}
+          </div>
+        )}
                 <div>
                     <h2 className='text-sm font-bold'>{user?.given_name} {user?.family_name}</h2>
-                    <h2 className='text-xs text-slate-400'>{user?.email}</h2>
+                    <h2 className='text-xs text-slate-400 break-words'>{user?.email}</h2>
                 </div>
             </div>
         </div>
