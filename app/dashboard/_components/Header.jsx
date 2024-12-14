@@ -1,41 +1,63 @@
-"use client"
-import React, { useEffect } from 'react'
-import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
+"use client";
+import React from "react";
+import { LogoutLink, useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
-  
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+import { redirect } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 function Header() {
-    const {user}=useKindeBrowserClient();
+  const { user } = useKindeBrowserClient();
 
-    const getInitial = () => {
-        return user?.given_name?.charAt(0).toUpperCase() || "?";
-    };
+  const getInitial = () => {
+    return user?.given_name?.charAt(0).toUpperCase() || "?";
+  };
 
-    return (
-        <div className='p-4 shadow-sm border flex justify-between'>
-            <div>
-
+  return (
+    <div className="p-4 shadow-sm border flex justify-between">
+      <div></div>
+      <Dialog>
+        <DialogTrigger asChild>
+          <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gray-300 text-gray-800 font-bold cursor-pointer ">
+            {user?.picture ? (
+              <img
+                src={user.picture}
+                alt="User"
+                className="rounded-full w-full h-full object-cover"
+              />
+            ) : (
+              <span>{getInitial()}</span>
+            )}
+          </div>
+        </DialogTrigger>
+        <DialogContent className="">
+          <DialogHeader>
+            <div className="py-3">
+              <DialogTitle>You are about to log out</DialogTitle>
+              <DialogDescription className="py-3">
+                Click the log out button to log out, or click Cancel to continue browsing</DialogDescription>
             </div>
-            <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gray-300 text-gray-800 font-bold">
-                {user?.picture ? (
-                    <img
-                        src={user.picture}
-                        alt="User"
-                        className="rounded-full w-full h-full object-cover"
-                    />
-                ) : (
-                    <span>{getInitial()}</span>
-                )}
+            <div className="flex gap-3 items-center justify-end mt-5">
+              <DialogClose asChild>
+                <Button variant="ghost">Cancel</Button> 
+              </DialogClose>
+              <Button asChild variant="destructive">
+                <LogoutLink postLogoutRedirectURL="http://localhost:3000">Log out</LogoutLink>
+              </Button>
             </div>
-        </div>
-    )
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
 }
 
-export default Header
+export default Header;
