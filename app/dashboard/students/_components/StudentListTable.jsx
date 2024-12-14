@@ -28,7 +28,7 @@ function StudentListTable({studentList, refreshData}) {
     const CustomButtons = (props) => {
         return (
             <AlertDialog>
-                <AlertDialogTrigger>
+                <AlertDialogTrigger asChild>
                     <Button variant="destructive">
                         <Trash />
                     </Button>
