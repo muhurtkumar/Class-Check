@@ -44,7 +44,7 @@ function AddNewStudent({refreshData}) {
         if (resp.data) {
           reset();
           refreshData(); // Clear form if successful
-          setLoading(false); // Set loading to false once success is handled
+          setLoading(false);// Set loading to false once success is handled
           toast("New Student Added !");
         } else {
           setLoading(false);
@@ -109,7 +109,7 @@ function AddNewStudent({refreshData}) {
                   >
                     Cancel
                   </Button>
-                  <Button type="submit" disable={loading}>
+                  <Button type="submit" disabled={loading}>
                     {loading ? <LoaderIcon className="animate-spin" /> : "Save"}
                   </Button>
                 </div>
