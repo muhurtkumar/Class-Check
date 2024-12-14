@@ -1,20 +1,38 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
-import Image from 'next/image'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu"
+  
 
 function Header() {
     const {user}=useKindeBrowserClient();
+
+    const getInitial = () => {
+        return user?.given_name?.charAt(0).toUpperCase() || "?";
+    };
+
     return (
         <div className='p-4 shadow-sm border flex justify-between'>
             <div>
 
             </div>
-            <div>
-                <Image src="https://lh3.googleusercontent.com/a/ACg8ocKJJUee2JkuCGQbDFGKcRKq-bohrFqZYCeLW8NqxSyVfvz0cw=s96-c" width={35}
-                height={35}
-                alt='user'
-                className='rounded-full' />
+            <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gray-300 text-gray-800 font-bold">
+                {user?.picture ? (
+                    <img
+                        src={user.picture}
+                        alt="User"
+                        className="rounded-full w-full h-full object-cover"
+                    />
+                ) : (
+                    <span>{getInitial()}</span>
+                )}
             </div>
         </div>
     )
