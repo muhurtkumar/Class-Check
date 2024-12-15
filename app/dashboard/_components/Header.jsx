@@ -23,7 +23,9 @@ function Header() {
 
   return (
     <div className="p-4 shadow-sm border flex justify-between">
-      <div></div>
+      <div className="flex items-center">
+        <h2 className="text-m font-bold">Welcome, {user?.given_name} {user?.family_name}</h2>
+      </div>
       <Dialog>
         <DialogTrigger asChild>
           <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gray-300 text-gray-800 font-bold cursor-pointer ">
