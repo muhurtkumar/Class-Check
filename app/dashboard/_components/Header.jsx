@@ -52,7 +52,7 @@ function Header() {
                 <Button variant="ghost">Cancel</Button> 
               </DialogClose>
               <Button asChild variant="destructive">
-                <LogoutLink postLogoutRedirectURL="http://localhost:3000">Log out</LogoutLink>
+                <LogoutLink postLogoutRedirectURL="https://class-check-eight.vercel.app">Log out</LogoutLink>
               </Button>
             </div>
           </DialogHeader>
