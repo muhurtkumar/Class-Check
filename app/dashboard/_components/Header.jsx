@@ -10,15 +10,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { DialogClose } from "@radix-ui/react-dialog";
 
 function Header() {
   const { user } = useKindeBrowserClient();
+  console.log(user);
 
   const getInitial = () => {
-    return user?.given_name?.charAt(0).toUpperCase() || "?";
+    return user?.picture || user?.given_name?.charAt(0).toUpperCase() || "?"; // Use picture if available, else initials
   };
 
   return (
@@ -28,7 +28,7 @@ function Header() {
       </div>
       <Dialog>
         <DialogTrigger asChild>
-          <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gray-300 text-gray-800 font-bold cursor-pointer ">
+          <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gray-300 text-gray-800 font-bold cursor-pointer">
             {user?.picture ? (
               <img
                 src={user.picture}
@@ -45,11 +45,12 @@ function Header() {
             <div className="py-3">
               <DialogTitle>You are about to log out</DialogTitle>
               <DialogDescription className="py-3">
-                Click the log out button to log out, or click Cancel to continue browsing</DialogDescription>
+                Click the log out button to log out, or click Cancel to continue browsing
+              </DialogDescription>
             </div>
             <div className="flex gap-3 items-center justify-end mt-5">
               <DialogClose asChild>
-                <Button variant="ghost">Cancel</Button> 
+                <Button variant="ghost">Cancel</Button>
               </DialogClose>
               <Button asChild variant="destructive">
                 <LogoutLink postLogoutRedirectURL="https://class-check-eight.vercel.app">Log out</LogoutLink>
