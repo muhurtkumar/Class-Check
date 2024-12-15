@@ -11,7 +11,10 @@ function SideNav() {
     const {user}=useKindeBrowserClient();
 
     const getInitial = () => {
+      if (user?.picture?.includes('d=blank')) {
         return user?.given_name?.charAt(0).toUpperCase() || "?";
+      }
+      return user?.picture || user?.given_name?.charAt(0).toUpperCase() || "?";
     };
     const menuList = [
         {
@@ -71,7 +74,7 @@ function SideNav() {
             ))}
 
 <div className="flex gap-2 items-center bottom-5 fixed py-4">
-        {user?.picture ? (
+        {user?.picture && !user.picture.includes('d=blank') ? (
           <Image
             src={user.picture}
             width={35}
