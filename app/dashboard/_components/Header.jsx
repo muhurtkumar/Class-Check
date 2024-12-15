@@ -10,6 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { DialogClose } from "@radix-ui/react-dialog";
 
@@ -18,7 +19,10 @@ function Header() {
   console.log(user);
 
   const getInitial = () => {
-    return user?.picture || user?.given_name?.charAt(0).toUpperCase() || "?"; // Use picture if available, else initials
+    if (user?.picture?.includes('d=blank')) {
+      return user?.given_name?.charAt(0).toUpperCase() || "?";
+    }
+    return user?.picture || user?.given_name?.charAt(0).toUpperCase() || "?";
   };
 
   return (
@@ -29,7 +33,7 @@ function Header() {
       <Dialog>
         <DialogTrigger asChild>
           <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gray-300 text-gray-800 font-bold cursor-pointer">
-            {user?.picture ? (
+            {user?.picture && !user.picture.includes('d=blank') ? (
               <img
                 src={user.picture}
                 alt="User"
